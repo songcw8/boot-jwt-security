@@ -9,7 +9,7 @@ public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String uuid;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String username;
     @Column(nullable = false)
     private String password;

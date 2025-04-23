@@ -3,9 +3,13 @@ package org.example.bootjwtsecurity.service;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
 import org.example.bootjwtsecurity.auth.JwtProvider;
-import org.example.bootjwtsecurity.model.dto.UserRegisterDTO;
+import org.example.bootjwtsecurity.model.dto.AuthTokenDTO;
+import org.example.bootjwtsecurity.model.dto.UserRequestDTO;
 import org.example.bootjwtsecurity.model.entity.Account;
 import org.example.bootjwtsecurity.repository.AccountRepository;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -14,22 +18,28 @@ import org.springframework.stereotype.Service;
 public class AccountService {
     private final AccountRepository accountRepository;
     private final PasswordEncoder passwordEncoder;
-    private final JwtProvider jwtProvider;
+    private final AuthenticationManager authManager;
+    private final JwtProvider jwtTokenProvider;
 
-    public void register(UserRegisterDTO dto) throws BadRequestException {
-        if(dto.username().isEmpty() || dto.password().isEmpty()){
+    public void register(UserRequestDTO dto) throws BadRequestException {
+        if (dto.username().isEmpty() || dto.password().isEmpty()) {
             throw new BadRequestException("잘못된 입력!");
         }
         Account account = new Account();
         account.setUsername(dto.username());
-        account.setPassword(passwordEncoder.encode(dto.password()));
+        account.setPassword(passwordEncoder.encode(dto.password())); // BCrypt
+        // UUID.
         accountRepository.save(account);
     }
 
-    public String login(UserRegisterDTO dto) throws BadRequestException{
-        if(dto.username().isEmpty() || dto.password().isEmpty()){
+    public AuthTokenDTO login(UserRequestDTO dto) throws BadRequestException {
+        if (dto.username().isEmpty() || dto.password().isEmpty()) {
             throw new BadRequestException("잘못된 입력!");
         }
-        return "";
+        Authentication auth = authManager.authenticate(
+                new UsernamePasswordAuthenticationToken(dto.username(), dto.password())
+        );
+        String token = jwtTokenProvider.generateToken(auth);
+        return new AuthTokenDTO(token);
     }
 }
