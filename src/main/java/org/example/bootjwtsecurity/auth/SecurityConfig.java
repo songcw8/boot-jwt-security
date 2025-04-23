@@ -32,10 +32,12 @@ public class SecurityConfig {
                                 )
                 )
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/**", "/swagger-ui/**", "/v3/api-docs/**")
-                        .permitAll()
-                        .anyRequest()
-                        .authenticated()
+                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**")
+                            .permitAll()
+                        .requestMatchers("/api/auth/**")
+                            .permitAll()
+                        .anyRequest() // 나머지 API
+                            .authenticated()
                 )
                 .authenticationProvider(daoAuthenticationProvider())
                 .addFilterBefore(jwtAuthenticationFilter(),
