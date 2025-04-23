@@ -6,7 +6,7 @@ import org.example.bootjwtsecurity.auth.JwtProvider;
 import org.example.bootjwtsecurity.model.dto.AuthTokenDTO;
 import org.example.bootjwtsecurity.model.dto.UserRequestDTO;
 import org.example.bootjwtsecurity.model.entity.Account;
-import org.example.bootjwtsecurity.repository.AccountRepository;
+import org.example.bootjwtsecurity.model.repository.AccountRepository;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

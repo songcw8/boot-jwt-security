@@ -2,7 +2,7 @@ package org.example.bootjwtsecurity.service;
 
 import lombok.RequiredArgsConstructor;
 import org.example.bootjwtsecurity.model.entity.Account;
-import org.example.bootjwtsecurity.repository.AccountRepository;
+import org.example.bootjwtsecurity.model.repository.AccountRepository;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

@@ -1,4 +1,4 @@
-package org.example.bootjwtsecurity.repository;
+package org.example.bootjwtsecurity.model.repository;
 
 import org.example.bootjwtsecurity.model.entity.Account;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -3,7 +3,7 @@ package org.example.bootjwtsecurity.service;
 import lombok.RequiredArgsConstructor;
 import org.example.bootjwtsecurity.model.dto.TeamRequestDTO;
 import org.example.bootjwtsecurity.model.entity.Team;
-import org.example.bootjwtsecurity.repository.TeamRepository;
+import org.example.bootjwtsecurity.model.repository.TeamRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
