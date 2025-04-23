@@ -25,6 +25,9 @@ spring:
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
 # JWT
+jwt:
+  secret: ${JWT_SECRET}
+  expiration-ms: ${JWT_EXPIRATION_MS}
 # ...
 # Swagger
 # 여러 가지 설정 on-off 및 dev, prod 분기
