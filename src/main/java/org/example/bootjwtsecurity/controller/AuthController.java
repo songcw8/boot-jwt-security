@@ -2,6 +2,7 @@ package org.example.bootjwtsecurity.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
+import org.example.bootjwtsecurity.model.dto.AuthTokenDTO;
 import org.example.bootjwtsecurity.model.dto.UserRegisterDTO;
 import org.example.bootjwtsecurity.service.AccountService;
 import org.springframework.http.HttpStatus;
@@ -21,8 +22,8 @@ public class AuthController {
     }
 
     @PostMapping("/token")
-    public ResponseEntity<String> getToken(@RequestBody UserRegisterDTO dto){
-        return ResponseEntity.ok().body("token");
+    public ResponseEntity<AuthTokenDTO> login(@RequestBody UserRegisterDTO dto) throws BadRequestException {
+        return ResponseEntity.ok(new AuthTokenDTO(""));
     }
 
     @ExceptionHandler(BadRequestException.class)
