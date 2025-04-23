@@ -27,9 +27,9 @@ public class JwtProvider {
         return Keys.hmacShaKeyFor(secretKey.getBytes());
     }
 
-    public String generateToken(Authentication authentication){
-        String username = authentication.getName();
-        Instant now = Instant.now();
+    public String generateToken(Authentication authentication) {
+        String username = authentication.getName(); // UUID
+        Instant now = Instant.now(); // UTC
         Date expiryDate = new Date(now.toEpochMilli() + expirationMs);
         return Jwts.builder()
                 .subject(username)
@@ -48,17 +48,21 @@ public class JwtProvider {
                 .getSubject();
     }
 
-    public Authentication getAuthentication(String token){
+    public Authentication getAuthentication(String token) {
         UserDetails user = new User(getUsername(token), "", List.of());
         return new UsernamePasswordAuthenticationToken(user, token, user.getAuthorities());
     }
 
-    public boolean validateToken(String token){
-        try{
-            Jwts.parser().verifyWith(getSigningKey()).build().parseSignedClaims(token);
+    public boolean validateToken(String token) {
+        try {
+            Jwts.parser()
+                    .verifyWith(getSigningKey())
+                    .build()
+                    .parseSignedClaims(token);
             return true;
-        }catch (JwtException | IllegalArgumentException e){
-            return false;
+        } catch (JwtException | IllegalArgumentException e) {
+            return false; // catch해주지 않으면...
+            // 작동하다가 삑!하면서 스탑된다
         }
     }
 }
